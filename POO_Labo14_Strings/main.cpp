@@ -20,10 +20,26 @@ using namespace std;
  */
 int main(int argc, char** argv) {
     
-    String s("Hello");
-    String s2("");
+    String s(42);
     
-    cout << s << s2 << 12;
+    cout << s << "\n";
+    
+    s.append("final");
+    cout << s << "\n";
+    
+    s.append(s);
+    cout << s << "\n";
+    /*
+    String s2("Hello");
+    
+    cout << s << s2 << s.lenght() << "  " << *s.getPtr(2);
+    *s.getPtr(2) = 'a';
+    cout << "  "  << s.equals(s2);;
+    */
+    
+    
+    
+    
     return 0;
 }
 
