@@ -15,8 +15,8 @@
 
 
 
-
-const char* String::getPtr(size_t begin, size_t end){
+/*
+char* String::getPtr(size_t begin, size_t end){
     if(begin == 0 || begin > this->lenght() || begin > end){
         std::cout << "\nError: Invalid argument\n";
         throw std::invalid_argument("Matrix size not equal");
@@ -24,25 +24,61 @@ const char* String::getPtr(size_t begin, size_t end){
     
     return str[pos - 1];
 }
-char& String::getPtr(int pos){
+ * */
+const char* String::getPtr(){
+    return str;
+}
+
+
+String String::substr(size_t start, size_t end) {
+    size_t len = this->lenght();
+    
+    if(start > end || end > len || start >= len)
+        throw std::invalid_argument("Matrix size not equal");
+    
+    char tmp[end - start + 1];
+    snprintf(tmp, end - start, str + start);
+    
+    String ret(tmp); 
+            
+    return ret;
+}
+
+
+char& String::getPtr(size_t pos){
+    if(pos >= this->lenght()){
+        std::cout << "\nError: Invalid argument\n";
+        throw std::invalid_argument("Matrix size not equal");
+    }
+    
+    return str[pos];
+}
+
+/*
+ char const * String::getPtr(int pos){
     if(pos == 0 || pos > this->lenght()){
         std::cout << "\nError: Invalid argument\n";
         throw std::invalid_argument("Matrix size not equal");
     }
     
-    return str[pos - 1]
+    return str + pos - 1;
 }
+ */
 
 void String::set(const String& s){
-    set(s.str);
+    if(&s != this)
+        set(s.str);
 }
 
 void String::set(const char* s){
+    
+    char buf[strlen(s) + 1];
+    strcpy(buf, s);
     delete[] str;
-    init(s);
+    init(buf);
 }
 
-unsigned String::lenght() const{
+size_t String::lenght() const{
     int len = 0;
     while(str[len] != '\0')
         ++len;
@@ -66,7 +102,7 @@ String& String::append(const String& s){
 
 String& String::append(const char* s){
         
-    unsigned tmpLen = this->lenght();
+    size_t tmpLen = this->lenght();
     char* tmpbuf = new char[tmpLen + strlen(s) + 1];
     
     strncpy(tmpbuf, str, tmpLen);
@@ -75,6 +111,25 @@ String& String::append(const char* s){
     str = tmpbuf;
     return *this;
 }
+
+String  String::plus(const String& s){
+    return this->plus(s.str);
+}
+
+String String::plus(const char* s){
+    size_t tmpLen = this->lenght();
+    char* tmpbuf = new char[tmpLen + strlen(s) + 1];
+    
+    strncpy(tmpbuf, str, tmpLen);
+    strcpy(tmpbuf + tmpLen, s);
+    String ret = String(tmpbuf);
+    return ret;
+}
+
+bool String::cmp(const String& s){
+    return (this == &s);
+}
+
 
 
 std::ostream& operator << (std::ostream& lhs, const String& rhs){
