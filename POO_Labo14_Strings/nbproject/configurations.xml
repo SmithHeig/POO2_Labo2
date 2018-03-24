@@ -38,7 +38,8 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <standard>8</standard>
+          <standard>11</standard>
+          <commandLine>-g</commandLine>
         </ccTool>
       </compileType>
       <item path="cstring.cpp" ex="false" tool="1" flavor2="0">
@@ -60,7 +61,7 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
-          <standard>8</standard>
+          <standard>11</standard>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

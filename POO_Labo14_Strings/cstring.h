@@ -32,65 +32,35 @@
 #define STRING_H
 
 class String {
-public:
-    String();;
-    
-    String(const String& orig){
-        init(orig.str);
-    }
-    
-    String(const char* str){
-        init(str);
-    }
-    
-    String(bool bln){    
-        if(bln)
-            init("true");
-        else
-            init("false");
-    } 
-    
-    String(unsigned int n){
-        initUnisigned((unsigned long long int) n);
-    }
-      
-    String(short n){
-        initPrimitvInteger((long long int) n);
-    }
-    
-    String(int n){
-        initPrimitvInteger((long long int) n);
-    }
-    
         
-    String(long int n){
-        initPrimitvInteger((long long int)n);
-    }
+private:
+    char* str;
+    size_t len;
     
-    String(long long int n){
-        initPrimitvInteger(n);
-    }
+public:
+    String();
     
-
- 
+    String(const String& orig);
     
+    String(const char* s);
     
-    String(double n){
-        initPrimitivReal(n);
-    }
+    String(char c);
     
-    String(float n){
-        initPrimitivReal((long double) n);
-    }
+    String(bool bln);
     
-    virtual ~String(){
-        delete[] str;
-    };
+    String(unsigned int n);
+      
+    String(int n);
+    
+    String(double n);
+    
+    virtual ~String();
     
     size_t lenght() const;
     
-    const char* getPtr();
-    char& getPtr(size_t pos);
+    const char* getPtr() const;
+    char& at(size_t pos);
+    char at(size_t pos) const;
     
     bool equals(const String& s) const;
     bool equals(const char* s) const;
@@ -100,51 +70,37 @@ public:
     String& append(const String& s);
     String& append(const char* s);
     
-    String plus(const String& s);
-    String plus(const char* s);
-    //String plusInvert();
+    String plus(const String& s) const;
+    String plus(const char* s) const;
     
     bool cmp(const String& s);
     
-    void set(const String& s);
-    void set(const char* s);
+    String& set(const String& s);
+    String& set(const char* s);
     
+    
+    String& operator = (const String s);
+    String& operator = (const char* s);
+
+    bool operator == (const String& s) const;
+    bool operator == (const char* s) const;
+
+    String& operator += (const String& s);
+    String& operator += (const char* s);
+
+    String operator + (const String& s) const;
+    String operator + (const char* s) const;
+
+    char& operator [] (size_t pos);
+    const char& operator[] (size_t pos) const;
+
     
     friend std::ostream& operator <<(std::ostream& lhs, const String& rhs);
+    friend std::istream& operator>>(std::istream &is, String& bignum);
 private:
-    void init(const char* str){
-        this->str = new char[strlen(str) + 1];
-        strcpy(this->str, str);
-    }
-    
-    void initPrimitvInteger(const long long int n){
-        char tmp[0];
-        int nbChar = snprintf(tmp, 0, "%lld", n );
-        char buf[nbChar + 1];
-        snprintf(buf, nbChar + 1, "%lld", n); 
-        init(buf);
-    }
-    
-    void initPrimitivReal(const long double n){
-        char tmp[0];
-        int nbChar = snprintf(tmp, 0, "%f", n );
-        char buf[nbChar + 1];
-         snprintf(buf, nbChar + 1, "%f", n); 
-         init(buf);
-    }
-    
-    void initUnisigned(unsigned long long int n){
-        char tmp[0];
-        int nbChar = snprintf(tmp, 0, "%llu", n );
-        char buf[nbChar + 1];
-        snprintf(buf, nbChar + 1, "%llu", n); 
-        init(buf);
-    }
-    
-    
-private:
-    char* str;
-    
+    void init(const char* s);
+        
+
 };
 
 #endif /* STRING_H */
