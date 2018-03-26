@@ -64,7 +64,8 @@ int main(int argc, char** argv) {
     std::cout << "sTestAt: " << sTestAt << "(" << sTestAt.lenght() << ")" << endl;
     sTestAt.at(2)++;
     std::cout << "sTestAt: " << sTestAt << "(" << sTestAt.lenght() << ")" << endl;
-    sTestAt[3]++;
+    char c = sTestAt[3];
+    c++;
     std::cout << "sTestAt: " << sTestAt << "(" << sTestAt.lenght() << ")" << endl;
     try{
         cout << "Test depassement de la fonction .at():" << endl;
@@ -76,6 +77,7 @@ int main(int argc, char** argv) {
     testChar(sTestAt.at(4));
     const char c = sTestAt.at(3);
     std::cout << endl;
+    
 /* TESTS substr() */
     std::cout << endl << "TESTS substr()" << endl;
     String sTestSubstr("Hello");
@@ -84,7 +86,6 @@ int main(int argc, char** argv) {
     std::cout << "sTestSubstr1: " << sTestSubstr1 << "(" << sTestSubstr1.lenght() << ")" << endl;
     String sTestSubstr2 = sTestSubstr.substr(1, sTestSubstr.lenght() - 1);
     std::cout << "sTestSubstr2: " << sTestSubstr2 << "(" << sTestSubstr2.lenght() << ")" << endl;
-    
     try{
         cout << "Test mauvaise bornes substr():" << endl;
         String sTestSubstr2 = sTestSubstr.substr(1, sTestSubstr.lenght() + 1);
