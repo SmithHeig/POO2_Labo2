@@ -14,18 +14,19 @@
 #include "cstring.h"
 
 String::String(){
-    str = new char[1];
-    str[0] = '\0';
+    init("\0");
+    // str = new char[1];
+    // str[0] = '\0';
 }
 
 
 String::String(const String& orig){
-        std::cout << "C: String(const String& orig)\n";
+ //       std::cout << "C: String(const String& orig)\n";
         init(orig.str);
 }
 String::String(const char* s){
         init(s);
-        std::cout << "C: String(const char* str)\n";
+ //       std::cout << "C: String(const char* str)\n";
 }
 String::String(char c){
     char buf[2];
@@ -50,7 +51,6 @@ String::String(unsigned int n){
 }
 
 String::String(int n){
-    std::cout << "C: String(int n)\n";
     char tmp[0];
     int nbChar = snprintf(tmp, 0, "%d", n );
     char buf[nbChar + 1];
@@ -60,9 +60,17 @@ String::String(int n){
 
 String::String(double n){
         char tmp[0];
-        int nbChar = snprintf(tmp, 0, "%f", n );
+        int nbChar = snprintf(tmp, 0, "%lf", n );
         char buf[nbChar + 1];
-        snprintf(buf, nbChar + 1, "%f", n); 
+        snprintf(buf, nbChar + 1, "%lf", n);
+        
+        for(int i = 0; i < nbChar; ++i){
+            if( buf[nbChar - i - 1] == '0')
+                buf[nbChar - i - 1] = '\0';
+            else
+                break;
+        }
+        
         init(buf);
 }
 
@@ -93,18 +101,20 @@ String String::substr(size_t start, size_t end) {
 }
 
 char String::at(size_t pos) const{
-    if(pos >= this->lenght()){
+    /*
+     * if(pos >= this->lenght()){
         std::cout << "\nError: Invalid argument\n";
         throw std::invalid_argument("Matrix size not equal");
     }
-    
-    return str[pos];
+     **/
+    //std::cout << "\nAt const\n";
+    return at(pos);
 }
 
 char& String::at(size_t pos){
-    if(pos >= this->lenght()){
-        std::cout << "\nError: Invalid argument\n";
-        throw std::invalid_argument("Matrix size not equal");
+    //std::cout << "\nAt pas const\n";
+    if(pos >= lenght()){
+        throw std::invalid_argument("invalid_argument .at(pos): Positon not correct.");
     }
     
     return str[pos];
@@ -119,7 +129,7 @@ String& String::set(const String& s){
 String& String::set(const char* s){
 
     if(s != str){
-        std::cout << "JE t'ai set\n";
+        //std::cout << "JE t'ai set\n";
 
         delete[] str;
         init(s);
@@ -157,12 +167,14 @@ String String::plus(const String& s) const{
 }
 
 String String::plus(const char* s) const{
+    
     size_t tmpLen = this->lenght();
     char* tmpbuf = new char[tmpLen + strlen(s) + 1];
     
-    strncpy(tmpbuf, str, tmpLen);
-    strcpy(tmpbuf + tmpLen, s);
-    String ret = String(tmpbuf);
+    strcpy(tmpbuf, str);
+    strcat(tmpbuf, s);
+    
+    String ret(tmpbuf);
     return ret;
 }
 
@@ -200,12 +212,18 @@ String String::operator + (const char* s) const{
     return plus(s);
 }
 
+char& String::operator [] (size_t pos){
+    return at(pos);
+}
+
+char String::operator [] (size_t pos) const{
+    return at(pos);
+}
+
 
 std::istream& operator>>(std::istream &is, String& s){
-    const int buffSz = 6;// low for easy testing
+    const int buffSz = 63;// low for easy testing
     char buff[buffSz];    
-    
-    //int n = 0;// # chars extracted each get
 
     while(is.get( buff, buffSz, '\n' ) )// call will fail if '\n' is next. ie. it won't return just '\0'
     {
@@ -216,7 +234,14 @@ std::istream& operator>>(std::istream &is, String& s){
 }
 
 std::ostream& operator << (std::ostream& lhs, const String& rhs){
-    size_t i = 0;
+    
+    
+    
+#if defined TEST_ENABLE && TEST_ENABLE==1
+    lhs << rhs.str;
+#else
+    
+       size_t i = 0;
     while(i <= rhs.lenght()){
         if (rhs.str[i]) {
             lhs << rhs.str[i];
@@ -225,13 +250,14 @@ std::ostream& operator << (std::ostream& lhs, const String& rhs){
         }
      ++i;
     }
+#endif
     return lhs;
 }
 
 
 
 void String::init(const char* s){
-    strlen(s);
-    this->str = new char[strlen(s) + 1];
+    len = strlen(s);
+    str = new char[strlen(s) + 1];
     strcpy(this->str, s);
 }

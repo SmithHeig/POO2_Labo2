@@ -27,7 +27,6 @@
 #include <cstdio>
 #include <stdexcept>
 
-
 #ifndef STRING_H
 #define STRING_H
 
@@ -38,6 +37,7 @@ private:
     size_t len;
     
 public:
+    //** CONSTUCTORS **//
     String();
     
     String(const String& orig);
@@ -56,9 +56,24 @@ public:
     
     virtual ~String();
     
+    /**
+     * Indique la longueur de la chaine de caractère (\0 non compris)
+     * @return longueur de la chaine de caractère (\0 non compris)
+     */
     size_t lenght() const;
     
+    /**
+     * Retourne un pointeur sur chaine de caractères non modifiable
+     * @return chaien de caractères
+     */
     const char* getPtr() const;
+    
+    /**
+     * 
+     * @param pos Position du caractère (de 0 à length -1)
+     * @return 
+     * @throw invalid_argument si la position n'est pas correcte
+     */
     char& at(size_t pos);
     char at(size_t pos) const;
     
@@ -91,15 +106,15 @@ public:
     String operator + (const String& s) const;
     String operator + (const char* s) const;
 
-    char& operator [] (size_t pos);
-    const char& operator[] (size_t pos) const;
+    char operator [](size_t pos) const;
+    char& operator[](size_t pos);
 
     
     friend std::ostream& operator <<(std::ostream& lhs, const String& rhs);
     friend std::istream& operator>>(std::istream &is, String& bignum);
 private:
     void init(const char* s);
-        
+    
 
 };
 
