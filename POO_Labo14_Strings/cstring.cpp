@@ -86,14 +86,14 @@ const char* String::getPtr() const{
     return str;
 }
 
-String String::substr(size_t start, size_t end) {
+String String::substr(size_t start, size_t end) const {
     size_t len = this->lenght();
     
     if(start > end || end > len || start >= len)
-        throw std::invalid_argument("Matrix size not equal");
+        throw std::invalid_argument("invalid_argument substr():  positions not correct");
     
     char tmp[end - start + 1];
-    snprintf(tmp, end - start, str + start);
+    snprintf(tmp, end - start + 1, str + start);
     
     String ret(tmp); 
             
@@ -101,18 +101,18 @@ String String::substr(size_t start, size_t end) {
 }
 
 char String::at(size_t pos) const{
-    /*
-     * if(pos >= this->lenght()){
+    
+     if(pos >= this->lenght()){
         std::cout << "\nError: Invalid argument\n";
         throw std::invalid_argument("Matrix size not equal");
     }
-     **/
-    //std::cout << "\nAt const\n";
-    return at(pos);
+    
+    std::cout << "\nAt ASDSASDD\n";
+    return str[pos];
 }
 
 char& String::at(size_t pos){
-    //std::cout << "\nAt pas const\n";
+    std::cout << "\nAt pas const\n";
     if(pos >= lenght()){
         throw std::invalid_argument("invalid_argument .at(pos): Positon not correct.");
     }
@@ -146,6 +146,12 @@ bool String::equals(const char* s) const{
     return !((bool) strcmp(str, s));
 }
 
+bool String::notEquals(const String& s) const{
+    return notEquals(s.str);
+}
+bool String::notEquals(const char* s) const{
+    return !equals(s);
+}
 
 String& String::append(const String& s){
     this->append(s.str);
@@ -153,8 +159,7 @@ String& String::append(const String& s){
 }
 
 String& String::append(const char* s){
-        
-    
+           
     String tmp = plus(s);
     delete[] str;
     init(tmp.str);
@@ -178,11 +183,6 @@ String String::plus(const char* s) const{
     return ret;
 }
 
-bool String::cmp(const String& s){
-    return (this == &s);
-}
-
-
 String& String::operator = (const String s){
     return set(s);
 }
@@ -196,6 +196,13 @@ bool String::operator == (const String& s) const{
 }
 bool String::operator == (const char* s) const{
     return equals(s);
+}
+
+bool String::operator != (const String& s) const{
+    return notEquals(s);
+}
+bool String::operator != (const char* s) const{
+    return notEquals(s);
 }
 
 String& String::operator += (const String& s){
@@ -222,15 +229,18 @@ char String::operator [] (size_t pos) const{
 
 
 std::istream& operator>>(std::istream &is, String& s){
-    const int buffSz = 63;// low for easy testing
-    char buff[buffSz];    
-
-    while(is.get( buff, buffSz, '\n' ) )// call will fail if '\n' is next. ie. it won't return just '\0'
+    /*
+    s.init("");                 // reset la string
+    const int buffSz = 255;     // taille subjective.
+    char buff[buffSz];
+    
+    while(is.get(buff, buffSz, '\n' ) )// call will fail if '\n' is next. ie. it won't return just '\0'
     {
         s.append(buff);
     }
-
     return is;
+     */
+    return is >> s.str;
 }
 
 std::ostream& operator << (std::ostream& lhs, const String& rhs){
