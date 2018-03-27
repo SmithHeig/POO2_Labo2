@@ -305,9 +305,11 @@ public:
     friend std::ostream& operator <<(std::ostream& lhs, const String& rhs);
     /**
      * Lecture du flux et affectation d'une ligne dans une string (lecture jusqu'au premier \n)
+     * Le contenu de la string est remplacé.
+     * Le flux est nettoyé après lécture.
      * @param s flux de lecure
      */
-    friend std::istream& operator>>(std::istream &is, String& bignum);
+    friend std::istream& operator>>(std::istream &is, String& s);
     
 private:
     /**

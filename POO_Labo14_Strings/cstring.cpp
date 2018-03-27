@@ -212,7 +212,18 @@ String::operator const char*() const{
 }
 
 std::istream& operator>>(std::istream &is, String& s){
-    return is >> s.str;
+    s.init("");                // reset la string 
+    const int buffSz = 255;     // taille objective (standard vu en SYE). 
+    char buff[buffSz]; 
+     
+    while(is.get(buff, buffSz, '\n'))       // lecture jusqu'au \n
+        s.append(buff);
+    
+    
+    is.clear();
+    fflush(stdin);
+
+    return is;
 }
 
 std::ostream& operator << (std::ostream& lhs, const String& rhs){

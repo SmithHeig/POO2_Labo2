@@ -11,9 +11,10 @@
 #include <iostream>
 #include <stdexcept>
 #include <limits>
+#include <cstdlib>
+
 #include "cstring.h"
 
-#define TEST_ENABLE 0
 using namespace std;
 
 int main(int argc, char** argv) {   
@@ -49,7 +50,7 @@ int main(int argc, char** argv) {
         cout << "sRealPos3: " << sRealPos3 << "(" << sRealPos3.lenght() << ")" << endl;
         
         String sRealNeg(-2.1234);
-        cout << "sRealNeg2: " << sRealNeg << "(" << sRealNeg.lenght() << ")" << endl;
+        cout << "sRealNeg: " << sRealNeg << "(" << sRealNeg.lenght() << ")" << endl;
         String sRealNeg2 = -2.1234;
         cout << "sRealNeg2: " << sRealNeg2 << "(" << sRealNeg2.lenght() << ")" << endl;
         
@@ -189,7 +190,7 @@ int main(int argc, char** argv) {
         cout << "sEnch += sEnch2 + \"vas-\" + sEnch3 + sEnch4: " << sEnch << endl;
 
     /* TESTS opérateur cast */
-        cout << endl << "TEST opérateur cast" << endl;
+        cout << endl << "TEST operateur cast" << endl;
         String strToCast("Cast me");
         const char* cTestCast = (const char*) strToCast;
         cout << "Cast me == " << cTestCast << endl;
@@ -206,6 +207,7 @@ int main(int argc, char** argv) {
         cout << "Re-enter1 a string: ";
         cin >> sFlux;
         cout << "You re-enter: " << sFlux << endl;
+        
         
     } catch (const exception& e){
         cout << e.what();
