@@ -1,59 +1,96 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   String.h
- * Author: Jeremie
+/* POO2:   Labo14
+ * File:   cstring.h
+ * Author: James, Jeremie
  *
- * Created on 15. mars 2018, 14:19
+ * Created on 15. mars 2018, 14:17
+ * 
+ * Header classe String.
  */
 
-/**
- *  ==  copie ref ou valeurs? Comment comparer 2 ref de string et String char*
- *  gérer tout les types primitifs?
- *  appels ambigus pour les long long long numbers
- *  si on fait 2 delete sur le même objet?
- *  opérateur = avec quels types?
- *  Bien de faire une copie local du buff pour init?
- 
- */
-
-#include <cstring>
-#include <iostream>
-
-#include <cstdio>
-#include <stdexcept>
 
 #ifndef STRING_H
 #define STRING_H
 
+#include <iostream>
+#include <stdexcept>
+
+/**
+ * Classe permettant l'initalisation de string (chaine de caractères).
+ * Elle offre certaintaines fonctionalités de manipulation.
+ * Elle est implémentée suivnt la même logique que la classe std::string (\0 en fin de chaine de caractère
+*/
 class String {
         
 private:
-    char* str;
-    size_t len;
-    
+    char* str;      // Chaine de caractère contenue dans la string (sse términe toujours par un '\0'
+
 public:
 //** CONSTUCTORS **//
-    String();
+// Aucun constreur n'est explicite pour permettre de construire facilement et appeler des méthodes depuis les types primitifs de ceux-ci
     
-    String(const String& orig);
+    /**
+     * Constructeur sans paramètre. Initalise une chaine avec seulement un '\0'
+     * @throw Erreur à l'initalisation mémoire du char*
+     */
+    String() throw (std::bad_alloc);
     
-    String(const char* s);
+    /**
+     * Constructeur de copie par référence, alloue et set le char* 
+     * Fait une copie des valeurs de la string dans une nouvelle string
+     * @param orig String à copier
+     * @throw Erreur à l'initalisation mémoire du char*
+     */
+    String(const String& orig) throw (std::bad_alloc);
     
-    String(char c);
+    /**
+     * Constructeur avec une chaine de caractère, alloue et set le char* 
+     * Attention, initaliser avec '\0' revient au même résultat que d'utiliser le constructeur sans paramètre
+     * @param s
+     * @throw Erreur à l'initalisation mémoire du char*
+     */
+    String(const char* s) throw (std::bad_alloc);
     
-    String(bool bln);
+    /**
+     * Contructeur à l'aide d'un caractère, alloue et set le char* 
+     * Attention, initaliser avec '\0' revient au même résultat que d'utiliser le constructeur sans paramètre.
+     * @param c
+     * @throw Erreur à l'initalisation mémoire du char*
+     */
+    String(char c) throw (std::bad_alloc);
     
-    String(unsigned int n);
-      
-    String(int n);
+    /**
+     * Contructeur boolean en text (true, false), alloue et set le char* 
+     * @param c
+     * @throw Erreur à l'initalisation mémoire du char*
+     */
+    String(bool bln) throw (std::bad_alloc);
     
-    String(double n);
+    /**
+     * Contructeur entier non signé, alloue et set le char* 
+     * @param n
+     * @throw Erreur à l'initalisation mémoire du char*
+     */
+    String(unsigned int n) throw (std::bad_alloc);
     
+    /**
+     * Constucteur entier, alloue et set le char* 
+     * @param n
+     * @throw Erreur à l'initalisation mémoire du char*
+     */
+    String(int n) throw (std::bad_alloc);
+    
+    /**
+     * Contructeur réel, alloue et set le char* 
+     * N'affiche que les caractères nécéssaire (pas de 0 en trop)
+     * @param n
+     * @throw Erreur à l'initalisation mémoire du char*
+     */
+    String(double n) throw (std::bad_alloc);
+    
+    /**
+     * Destructeur,
+     * Désaloue le char*
+     */
     virtual ~String();
     
 //** METHODS **//
@@ -75,14 +112,14 @@ public:
      * @return référence sur un caractère de la string
      * @throw invalid_argument si la position n'est pas correcte
      */
-    char& at(size_t pos);
+    char& at(size_t pos) throw (std::invalid_argument);
     /**
      * Obtient un caratère de la String
      * @param pos Position du caractère (de 0 à length -1)
      * @return valeur du caractère
      * @throw invalid_argument si la position n'est pas correcte
      */
-    char at(size_t pos) const;
+    char at(size_t pos) const throw(std::invalid_argument);
     
     /**
      * Compare lexicographiquement si la string est égal à une autre string
@@ -116,47 +153,54 @@ public:
      * @param end fin de la sus chaine de caractère (borne supérieur)
      * @return une nouvelle string avec la sous chaine de caractère
      * @throw invalid_argument si les bornes ne sont pas correcte
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String substr(size_t start, size_t end) const;
+    String substr(size_t start, size_t end) const throw (std::invalid_argument, std::bad_alloc);
     
     /**
      * Concatène une string à la fin de la string courante (la modifie)
      * @param s string à ajouter à la string courrante
      * @return réference sur la string courrante (modifiée)
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String& append(const String& s);
+    String& append(const String& s) throw (std::bad_alloc);
     /**
      * Concatène une chaine de caractères à la fin de la string courante (la modifie)
      * @param s chaine de caractères à ajouter à la string courrante
      * @return réference sur la string courrante (modifiée)
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String& append(const char* s);
+    String& append(const char* s) throw (std::bad_alloc);
     
     /**
      * Concatène une string à la fin de la string courante dans une nouvelle string
      * @param s string à ajouter à la string courrante
      * @return une nouvelle string avec les valeurs des 2 elements concaténés
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String plus(const String& s) const;
+    String plus(const String& s) const throw (std::bad_alloc);
     /**
      * Concatène une chaine de caractères à la fin de la string courante dans une nouvelle string
      * @param s chaine de caractères à ajouter à la string courrante
      * @return une nouvelle string avec les valeurs des 2 elements concaténés
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String plus(const char* s) const;
+    String plus(const char* s) const throw (std::bad_alloc);
     
     /**
      * Affecte une nouvelle valeur à la string courante à partir d'une string
      * @param s valeur afectée à la string courante
      * @return réference sur la string courrante (modifiée)
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String& set(const String& s);
+    String& set(const String& s) throw (std::bad_alloc);
     /**
      * Affecte une nouvelle valeur à la string courante à partir d'une chaine de caractère
      * @param s valeur afectée à la string courante
      * @return réference sur la string courrante (modifiée)
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String& set(const char* s);
+    String& set(const char* s) throw (std::bad_alloc);
     
 //** SURCHARGE OPERATEURS **//
     /**
@@ -165,66 +209,71 @@ public:
      * @param s valeur afectée à la string courante
      * @return réference sur la string courrante (modifiée)
      */
-    String& operator =(const String s);
+    String& operator =(const String s) throw (std::bad_alloc);
     /**
      * Surcharge opérateur =
      * Affecte une nouvelle valeur à la string courante à partir d'une chaine de caractère
      * @param s valeur afectée à la string courante
      * @return réference sur la string courrante (modifiée)
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String& operator =(const char* s);
+    String& operator =(const char* s) throw (std::bad_alloc);
 
     /**
      * Compare lexicographiquement si la string est égal à une autre string
      * @param s element à comparer
      * @return true si c'est égal autement false
      */
-    bool operator == (const String& s) const;
+    bool operator ==(const String& s) const;
     /**
      * Compare lexicographiquement si la string est égal à une autre chaine de caractères
      * @param s element à comparer
      * @return true si c'est égal autement false
      */
-    bool operator == (const char* s) const;
+    bool operator ==(const char* s) const;
     /**
      * Compare lexicographiquement si la string est diffrente à une autre string
      * @param s element à comparer
      * @return false si c'est égal autement true
      */
-    bool operator != (const String& s) const;
+    bool operator !=(const String& s) const;
 
     /**
      * Compare lexicographiquement si la string est diffrente à une autre chaine de caractères
      * @param s element à comparer
      * @return false si c'est égal autement true
      */
-    bool operator != (const char* s) const;
+    bool operator !=(const char* s) const;
 
     /**
      * Concatène une string à la fin de la string courante (la modifie)
      * @param s string à ajouter à la string courrante
      * @return réference sur la string courrante (modifiée)
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String& operator += (const String& s);
+    String& operator +=(const String& s) throw (std::bad_alloc);
     /**
      * Concatène une chaine de caractères à la fin de la string courante (la modifie)
      * @param s chaine de caractères à ajouter à la string courrante
      * @return réference sur la string courrante (modifiée)
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String& operator += (const char* s);
+    String& operator +=(const char* s) throw (std::bad_alloc);
 
     /**
      * Concatène une string à la fin de la string courante dans une nouvelle string
      * @param s string à ajouter à la string courrante
      * @return une nouvelle string avec les valeurs des 2 elements concaténés
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String operator + (const String& s) const;
+    String operator +(const String& s) const throw (std::bad_alloc);
     /**
      * Concatène une chaine de caractères à la fin de la string courante dans une nouvelle string
      * @param s chaine de caractères à ajouter à la string courrante
      * @return une nouvelle string avec les valeurs des 2 elements concaténés
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    String operator + (const char* s) const;
+    String operator +(const char* s) const throw (std::bad_alloc);
 
     /**
      * Obtient un référence sur un caratère de la String. Sa modification modifie la string
@@ -241,12 +290,13 @@ public:
      */
     char& operator[](size_t pos);
     
-    /*
-    operator const char*(){
-        std::cout << "\nGET CAST\n";
-        return getPtr();
-    }
-     * */
+    /**
+     * Surcharfe de l'opérateur de cast de la string pour obtenir un char*
+     * @return la sting en char*
+     * @explicit  Doit être appleé explicitement pour ne pas faire de cast non voulus.
+     */
+    explicit operator const char*() const;
+     
     
     /**
      * Ecriture de la string dans le flux
@@ -261,12 +311,11 @@ public:
     
 private:
     /**
-     * Initalise la varialve str à une valeur avec le \0 comme dernier caractère
+     * alloue et set la variable str (char*) à une valeur avec le dernier caractère à '\0'
      * @param s Valeur que prend str
+     * @throw Erreur à l'initalisation mémoire du char*
      */
-    void init(const char* s);
-    
-
+    void init(const char* s) throw (std::bad_alloc);
 };
 
 #endif /* STRING_H */
