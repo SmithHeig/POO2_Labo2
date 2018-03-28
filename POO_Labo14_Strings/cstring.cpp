@@ -28,8 +28,8 @@ String::String(char c) throw (std::bad_alloc){
     init(buf);
 }
  
-
 String::String(bool bln) throw (std::bad_alloc){    
+
     if(bln)
         init("true");
     else
@@ -54,15 +54,9 @@ String::String(int n) throw (std::bad_alloc){
 
 String::String(double n) throw (std::bad_alloc){
     // Récupération du nombre de paramètre, pas besoin de tester le type de retour car il serat toujours > 0
-    int nbChar = snprintf(nullptr, 0, "%f", n);
+    int nbChar = snprintf(nullptr, 0, "%g", n);
     char buf[nbChar + 1];
-    snprintf(buf, nbChar + 1, "%f", n);
-
-    // Supression des derniers 0
-    size_t i = 0;
-    while(buf[nbChar - i - 1] == '0')
-        buf[nbChar - (i++) - 1] = '\0';
-
+    snprintf(buf, nbChar + 1, "%g", n);
     init(buf);
 }
 
@@ -141,10 +135,16 @@ String& String::append(const String& s) throw (std::bad_alloc){
     return *this;
 }
 
-String& String::append(const char* s) throw (std::bad_alloc){        
-    String tmp = plus(s);
+String& String::append(const char* s) throw (std::bad_alloc){
+    size_t tmpLen = lenght();
+    char tmpbuf[tmpLen + strlen(s) + 1];
+    
+    strcpy(tmpbuf, str);
+    strcat(tmpbuf, s);
+    
     delete[] str;
-    init(tmp.str);
+    init(tmpbuf);
+    
     return *this;
 }
 
@@ -153,14 +153,15 @@ String String::plus(const String& s) const throw (std::bad_alloc){
 }
 
 String String::plus(const char* s) const throw (std::bad_alloc){
-    size_t tmpLen = lenght();
-    char tmpbuf[tmpLen + strlen(s) + 1];
     
-    strcpy(tmpbuf, str);
-    strcat(tmpbuf, s);
+    String ret(*this);
+    ret.append(s);
+    return ret;
     
+    /*
     String ret(tmpbuf);
     return ret;
+     * */
 }
 
 String& String::operator = (const String s) throw (std::bad_alloc){
