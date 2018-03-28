@@ -164,7 +164,8 @@ int main(int argc, char** argv) {
         cout << "testPlus.plus(\"2\"): " << testPlus.plus("2") << endl;
         cout << "testPlus + testPlus2 : " << (testPlus + testPlus2) << endl;
         cout << "testPlus +\"3\": " << (testPlus + "3") << endl;
-
+        cout << "testPlus +\"3\" + 1 + \'c\': " << (testPlus + "3" + 1 + 'c') << endl;   
+        
     /* TESTS set(), = */
         cout << endl << "TESTS set(), =" << endl;
         String sSet;
@@ -179,15 +180,16 @@ int main(int argc, char** argv) {
         cout << "sSet = sSet.getPtr(): " << (sSet = sSet.getPtr()) << endl;
         cout << "sSet = sSet: " << (sSet = sSet) << endl;
         cout << "sSet = sSet.at(2): " << (sSet = sSet.at(2)) << endl;
-
+        cout << "sSet = '1': " << (sSet = '1') << endl;
+        
     /* TESTS enchainement opérateur += +*/
         cout << endl << "TEST enchainement operateur += +" << endl;
         String sEnch("HELLO");
         String sEnch2(" comment ");
         String sEnch3("tu");
         String sEnch4("?");
-        sEnch += sEnch2 + "vas-" + sEnch3 + sEnch4;
-        cout << "sEnch += sEnch2 + \"vas-\" + sEnch3 + sEnch4: " << sEnch << endl;
+        sEnch += sEnch2 + "vas-" + sEnch3 + sEnch4 + ':' + 3;
+        cout << "sEnch += sEnch2 + \"vas-\" + sEnch3 + sEnch4 + ':' + 3: " << sEnch << endl;
 
     /* TESTS opérateur cast */
         cout << endl << "TEST operateur cast" << endl;

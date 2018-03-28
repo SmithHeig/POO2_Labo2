@@ -54,7 +54,7 @@ String::String(int n) throw (std::bad_alloc){
 
 String::String(double n) throw (std::bad_alloc){
     // Récupération du nombre de paramètre, pas besoin de tester le type de retour car il serat toujours > 0
-    int nbChar = snprintf(nullptr, 0, "%f", n );
+    int nbChar = snprintf(nullptr, 0, "%f", n);
     char buf[nbChar + 1];
     snprintf(buf, nbChar + 1, "%f", n);
 

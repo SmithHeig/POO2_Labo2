@@ -17,7 +17,11 @@
 /**
  * Classe permettant l'initalisation de string (chaine de caractères).
  * Elle offre certaintaines fonctionalités de manipulation.
- * Elle est implémentée suivnt la même logique que la classe std::string (\0 en fin de chaine de caractère
+ * Elle est implémentée suivnt la même logique que la classe std::string (\0 en fin de chaine de caractère.
+ * Touts lés opérateurs ont leur équivalent en méthodes public.
+ * Nous avons jugé nécéssaire de créer un équivalent de chaque méthode et opérateur sur un String avec un char* pour éviter 
+ *  de récréer une String avec l'appelle implicite du constructeur de const char*. Cepandant nous n'avons pas jugé nécéssaire de le faire pour les autres types (appelleau constructeur)
+ *  
 */
 class String {
         
