@@ -157,11 +157,6 @@ String String::plus(const char* s) const throw (std::bad_alloc){
     String ret(*this);
     ret.append(s);
     return ret;
-    
-    /*
-    String ret(tmpbuf);
-    return ret;
-     * */
 }
 
 String& String::operator = (const String s) throw (std::bad_alloc){
@@ -213,7 +208,7 @@ String::operator const char*() const{
 }
 
 std::istream& operator>>(std::istream &is, String& s){
-    s.init("");                // reset la string 
+    s.set("");                  // reset la string 
     const int buffSz = 255;     // taille objective (standard vu en SYE). 
     char buff[buffSz]; 
      
