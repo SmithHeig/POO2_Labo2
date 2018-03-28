@@ -311,6 +311,7 @@ public:
      * Lecture du flux et affectation d'une ligne dans une string (lecture jusqu'au premier \n)
      * Le contenu de la string est remplacé.
      * Le flux est nettoyé après lécture.
+     * Accèpte une string vide (si on appuie directement sur enter
      * @param s flux de lecure
      */
     friend std::istream& operator>>(std::istream &is, String& s);

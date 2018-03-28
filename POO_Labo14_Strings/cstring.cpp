@@ -154,7 +154,7 @@ String String::plus(const String& s) const throw (std::bad_alloc){
 
 String String::plus(const char* s) const throw (std::bad_alloc){
     size_t tmpLen = lenght();
-    char* tmpbuf = char[tmpLen + strlen(s) + 1];
+    char* tmpbuf[tmpLen + strlen(s) + 1];
     
     strcpy(tmpbuf, str);
     strcat(tmpbuf, s);
