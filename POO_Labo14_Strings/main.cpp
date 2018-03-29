@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
         
         String sRealPos(2.123);
         cout << "sRealPos: " << sRealPos << "(" << sRealPos.lenght() << ")" << endl;
-        String sRealPos2 = 2.123;
+        String sRealPos2 = 2.123456;
         cout << "sRealPos2: " << sRealPos2 << "(" << sRealPos2.lenght() << ")" << endl;
         double inf = std::numeric_limits<double>::infinity();
         String sRealPos3(inf);

@@ -297,7 +297,7 @@ public:
     /**
      * Surcharfe de l'opérateur de cast de la string pour obtenir un char*
      * @return la sting en char*
-     * @explicit  Doit être appleé explicitement pour ne pas faire de cast non voulus.
+     * @explicit  Doit être appleé explicitement pour ne pas faire de cast non voulus. (erreur d'ambiguités à la compilation)
      */
     explicit operator const char*() const;
      
@@ -322,9 +322,7 @@ private:
      * @param s Valeur que prend str
      * @throw Erreur à l'initalisation mémoire du char*
      */
-    void init(const char* s) throw (std::bad_alloc);
-    
-    
+    void init(const char* s) throw (std::bad_alloc); 
 };
 
 #endif /* STRING_H */
