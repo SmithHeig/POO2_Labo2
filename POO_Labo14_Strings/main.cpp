@@ -21,10 +21,6 @@ int main(int argc, char** argv) {
     
     try{ // En cas d'échéc d'inialisation de sting
     /* TESTS CONSTRUCTORS */
-        
-        
-        String test(3.14e-36);
-        cout<< "TETET" << test << endl << endl;
         cout << "\nTESTS CONSTRUCTORS" << endl;
         String sNull;
         cout << "sNull: " << sNull << "(" << sNull.lenght() << ")" << endl;
@@ -41,7 +37,7 @@ int main(int argc, char** argv) {
         
         String sBool(true);
         cout << "sBool: " << sBool << "(" << sBool.lenght() << ")" << endl;
-         String sBool2 = true;
+        String sBool2 = true;
         cout << "sBool2: " << sBool2 << "(" << sBool2.lenght() << ")" << endl;
         
         String sRealPos(2.123);
@@ -51,6 +47,8 @@ int main(int argc, char** argv) {
         double inf = std::numeric_limits<double>::infinity();
         String sRealPos3(inf);
         cout << "sRealPos3: " << sRealPos3 << "(" << sRealPos3.lenght() << ")" << endl;
+        String sRealSci(3.14e-50);
+        cout << "sRealSci: " << sRealSci << "(" << sRealSci.lenght() << ")" << endl;
         
         String sRealNeg(-2.1234);
         cout << "sRealNeg: " << sRealNeg << "(" << sRealNeg.lenght() << ")" << endl;
