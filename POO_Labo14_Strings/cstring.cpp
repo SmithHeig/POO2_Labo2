@@ -13,7 +13,7 @@
 #include "cstring.h"
 
 String::String() throw (std::bad_alloc){
-    init("\0");
+    init("");
 }
 
 String::String(const String& orig) throw (std::bad_alloc){
@@ -153,7 +153,6 @@ String String::plus(const String& s) const throw (std::bad_alloc){
 }
 
 String String::plus(const char* s) const throw (std::bad_alloc){
-    
     String ret(*this);
     ret.append(s);
     return ret;
@@ -209,12 +208,12 @@ String::operator const char*() const{
 
 std::istream& operator>>(std::istream &is, String& s){
     s.set("");                  // reset la string 
-    const int buffSz = 255;     // taille objective (standard vu en SYE). 
+    const int buffSz = 256;     // taille objective (standard vu en SYE). 
     char buff[buffSz]; 
      
-    while(is.get(buff, buffSz, '\n'))       // lecture jusqu'au \n
+    while(is.get(buff, buffSz, '\n')){       // lecture jusqu'au \n
         s.append(buff);
-    
+    } 
     
     is.clear();
     fflush(stdin);

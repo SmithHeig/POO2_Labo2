@@ -315,7 +315,7 @@ public:
      * @param s flux de lecure
      */
     friend std::istream& operator>>(std::istream &is, String& s);
-    
+
 private:
     /**
      * alloue et set la variable str (char*) à une valeur avec le dernier caractère à '\0'
@@ -323,6 +323,8 @@ private:
      * @throw Erreur à l'initalisation mémoire du char*
      */
     void init(const char* s) throw (std::bad_alloc);
+    
+    
 };
 
 #endif /* STRING_H */
